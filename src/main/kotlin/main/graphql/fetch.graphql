@@ -1,0 +1,39 @@
+query {
+{
+  repository(owner: "instructure", name: "canvas-lms") {
+    issues(first: 1) {
+      totalCount
+
+      edges {
+        node {
+          url
+          createdAt
+          closedAt
+        }
+      }
+
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+
+    pullRequests(first: 1) {
+      totalCount
+
+      edges {
+        node {
+          url
+          createdAt
+          closedAt
+        }
+      }
+
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}
+}

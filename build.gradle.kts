@@ -4,15 +4,29 @@ plugins {
     kotlin("jvm") version "1.3.21"
 }
 
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath("com.apollographql.apollo:apollo-gradle-plugin:1.0.0-alpha5")
+    }
+}
+
+apply(plugin = "com.apollographql.android")
+
 group = "repo_stats"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenCentral()
+    google()
+    jcenter()
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("com.apollographql.apollo:apollo-runtime:1.0.0-alpha5")
 }
 
 tasks.withType<KotlinCompile> {
