@@ -1,9 +1,7 @@
 query FetchQuery {
-{
   repository(owner: "instructure", name: "canvas-lms") {
     issues(first: 1) {
       totalCount
-
       edges {
         node {
           url
@@ -11,16 +9,13 @@ query FetchQuery {
           closedAt
         }
       }
-
       pageInfo {
         endCursor
         hasNextPage
       }
     }
-
     pullRequests(first: 1) {
       totalCount
-
       edges {
         node {
           url
@@ -28,12 +23,10 @@ query FetchQuery {
           closedAt
         }
       }
-
       pageInfo {
         endCursor
         hasNextPage
       }
     }
   }
-}
 }
