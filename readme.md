@@ -7,3 +7,9 @@
 
 - https://github.com/jimkyndemeyer/js-graphql-intellij-plugin
   - Doesn't work with Community Edition
+
+- https://github.com/apollographql/apollo-tooling#apollo-schemadownload-output
+
+`apollo schema:download --endpoint=https://api.github.com/graphql --header="Authorization: Bearer $GITHUB_TOKEN"`
+https://www.apollographql.com/docs/ios/downloading-schema.html
+

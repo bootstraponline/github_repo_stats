@@ -1,4 +1,4 @@
-query {
+query FetchQuery {
 {
   repository(owner: "instructure", name: "canvas-lms") {
     issues(first: 1) {
