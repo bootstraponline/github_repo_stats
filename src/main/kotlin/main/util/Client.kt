@@ -1,4 +1,4 @@
-package main
+package main.util
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.github.type.CustomType

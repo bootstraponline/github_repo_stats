@@ -1,4 +1,4 @@
-package main
+package main.util
 
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Response

@@ -27,9 +27,14 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
-    implementation("com.apollographql.apollo:apollo-runtime:1.0.0-alpha5")
+
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.3.21")
+
+    implementation("com.apollographql.apollo:apollo-runtime:1.0.0-alpha5")
+
     implementation("com.squareup.okhttp3:okhttp:3.14.0")
+    implementation("com.google.code.gson:gson:2.8.5")
 }
 
 tasks.withType<KotlinCompile> {
