@@ -27,6 +27,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.apollographql.apollo:apollo-runtime:1.0.0-alpha5")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
 }
 
 tasks.withType<KotlinCompile> {
