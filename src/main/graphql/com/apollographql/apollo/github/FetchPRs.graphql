@@ -1,0 +1,18 @@
+query FetchPRs($first: Int!, $after: String) {
+  repository(owner: "instructure", name: "canvas-lms") {
+    pullRequests(first: $first, after: $after) {
+      totalCount
+      edges {
+        node {
+          url
+          createdAt
+          closedAt
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}

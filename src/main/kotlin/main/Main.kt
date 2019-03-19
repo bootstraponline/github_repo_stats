@@ -1,16 +1,16 @@
 package main
 
-import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.github.FetchQuery
+import com.apollographql.apollo.api.Input
+import com.apollographql.apollo.github.FetchIssuesQuery
+import com.apollographql.apollo.github.FetchPRsQuery
 import kotlinx.coroutines.runBlocking
+import java.lang.RuntimeException
 
-fun Response<FetchQuery.Data>.printData() {
-    val repo = this.data()?.repository() ?: return
+fun FetchIssuesQuery.Data.printData() {
+    val repo = this.repository() ?: throw RuntimeException("Null repository")
     val issues = repo.issues()
-    val prs = repo.pullRequests()
 
     println("Total issues: ${issues.totalCount()}")
-    println("Total PRs: ${prs.totalCount()}")
 
     val issuesEdges = issues.edges()
 
@@ -20,6 +20,13 @@ fun Response<FetchQuery.Data>.printData() {
             println("  ${it.node()?.url()}")
         }
     }
+}
+
+fun FetchPRsQuery.Data.printData() {
+    val repo = this.repository() ?: throw RuntimeException("Null repository")
+
+    val prs = repo.pullRequests()
+    println("Total PRs: ${prs.totalCount()}")
 
     val prsEdges = prs.edges()
     if (prsEdges != null) {
@@ -31,8 +38,9 @@ fun Response<FetchQuery.Data>.printData() {
 }
 
 fun main() = runBlocking {
-    val response = client.query(FetchQuery()).execute()
-    response.printData()
+    // TODO: pass cursor back into query for pagination.  `after: "$cursor") { ... }`
+    client.query(FetchIssuesQuery(2, Input.absent())).execute().data()?.printData()
+    client.query(FetchPRsQuery(2, Input.absent())).execute().data()?.printData()
 
     System.exit(0)
 }

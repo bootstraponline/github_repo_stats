@@ -1,0 +1,18 @@
+query FetchIssues($first: Int!, $after: String) {
+  repository(owner: "instructure", name: "canvas-lms") {
+    issues(first: $first, after: $after) { # limit is 100 per page
+      totalCount
+      edges {
+        node {
+          url
+          createdAt
+          closedAt
+        }
+      }
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+    }
+  }
+}
