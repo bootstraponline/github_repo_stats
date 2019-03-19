@@ -1,6 +1,6 @@
 query FetchQuery {
   repository(owner: "instructure", name: "canvas-lms") {
-    issues(first: 1) {
+    issues(first: 1) { # limit is 100 per page
       totalCount
       edges {
         node {
@@ -14,7 +14,7 @@ query FetchQuery {
         hasNextPage
       }
     }
-    pullRequests(first: 1) {
+    pullRequests(first: 0) {
       totalCount
       edges {
         node {
