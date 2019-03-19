@@ -1,39 +1,38 @@
 package main
 
-import com.apollographql.apollo.ApolloCall
-import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.exception.ApolloException
 import com.apollographql.apollo.github.FetchQuery
 import kotlinx.coroutines.runBlocking
-import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
-import kotlin.coroutines.suspendCoroutine
 
-// Apollo dropped the sync API. We can bring it back by using a suspend coroutine.
-// https://github.com/apollographql/apollo-android/issues/1054#issuecomment-474151322
-// https://github.com/apollographql/apollo-android/issues/606
-suspend fun <T> ApolloCall<T>.execute() = suspendCoroutine<Response<T>> { continuation ->
-    enqueue(object : ApolloCall.Callback<T>() {
-        override fun onResponse(response: Response<T>) {
-            continuation.resume(response)
+fun Response<FetchQuery.Data>.printData() {
+    val repo = this.data()?.repository() ?: return
+    val issues = repo.issues()
+    val prs = repo.pullRequests()
+
+    println("Total issues: ${issues.totalCount()}")
+    println("Total PRs: ${prs.totalCount()}")
+
+    val issuesEdges = issues.edges()
+
+    if (issuesEdges != null) {
+        println("Fetched issues: ${issuesEdges.size}")
+        issuesEdges.forEach {
+            println("  ${it.node()?.url()}")
         }
-        override fun onFailure(error: ApolloException) {
-            continuation.resumeWithException(error)
+    }
+
+    val prsEdges = prs.edges()
+    if (prsEdges != null) {
+        println("Fetched PRs: ${prsEdges.size}")
+        prsEdges.forEach {
+            println("  ${it.node()?.url()}")
         }
-    })
+    }
 }
 
-val client = ApolloClient.builder()
-    .serverUrl("https://api.github.com/graphql")
-    .build()!!
-val query = FetchQuery()
-
 fun main() = runBlocking {
-    println("graphql started!")
+    val response = client.query(FetchQuery()).execute()
+    response.printData()
 
-    // TODO: solve ApolloHttpException: HTTP 401 Unauthorized
-    val data = client.query(query).execute()
-
-    println("graphql finished!")
+    System.exit(0)
 }

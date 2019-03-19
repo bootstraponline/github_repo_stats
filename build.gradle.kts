@@ -1,3 +1,4 @@
+import com.apollographql.apollo.gradle.ApolloExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -28,8 +29,18 @@ dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("com.apollographql.apollo:apollo-runtime:1.0.0-alpha5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1")
+    implementation("com.squareup.okhttp3:okhttp:3.14.0")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+configure<ApolloExtension> {
+    setCustomTypeMapping(
+        mapOf(
+            "URI" to "java.lang.String",
+            "DATETIME" to "java.time.ZonedDateTime"
+        )
+    )
 }
